@@ -7,7 +7,7 @@
 -->
 <template>
   <div
-    class="text-center w-full grid gap-8 grid-cols-[repeat(auto-fit,minmax(500px,1fr))] v-image-task"
+    class="text-center w-full grid gap-8 grid-cols-[repeat(auto-fit,minmax(280px,1fr))] v-image-task"
   >
     <template v-if="images?.length > 0">
       <div class="m-8" v-for="(item, idx) in images as any" :key="idx">

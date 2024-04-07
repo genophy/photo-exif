@@ -6,7 +6,7 @@
   Usage     :
 -->
 <template>
-  <div class="h-full overflow-auto">
+  <div>
     <RouterView />
     <PageCopyright />
   </div>
@@ -14,7 +14,7 @@
 
 <script setup lang="ts">
 import { RouterView } from 'vue-router'
-import PageCopyright from './components/PageCopyright.vue'
+import PageCopyright from './components/pages/PageCopyright.vue'
 </script>
 
 <script setup lang="ts"></script>

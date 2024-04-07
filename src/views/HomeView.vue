@@ -6,30 +6,28 @@
   Usage     :
 -->
 <template>
-  <div class="flex flex-col min-h-80 p-12 v-home-view items-center justify-center select-none">
-    <div class="flex w-full p-4 top-0 z-10 head justify-center sticky">
-      <p class="mr-20 btn-choose">
-        <template v-if="fileLoading">加载中...</template>
-        <template v-else>
-          <span>选择图片</span>
-          <input type="file" @change="filechange" multiple accept="image/*" />
-        </template>
-      </p>
-
-      <div
-        @click="bgColorFlagStore.toggle()"
-        class="switch"
-        :class="[bgColorFlagStore.bgPrim ? 'on' : 'off']"
-      >
-        <p class="p-on">主调底色[点击切换]</p>
-        <p class="p-off">白色底色[点击切换]</p>
+  <div class="flex flex-col items-center justify-center p-12 select-none min-h-80 v-home-view">
+    <div class="sticky top-0 z-10 flex justify-between w-full p-4 head">
+      <div class="items-center justify-between flex-grow md:flex">
+        <p class="p-3 text-sm btn-choose sm:p-6 sm:text-3xl">
+          <template v-if="fileLoading">加载中...</template>
+          <template v-else>
+            <span>选择图片</span>
+            <input type="file" @change="filechange" multiple accept="image/*" />
+          </template>
+        </p>
+        <div class="hidden mx-8 img-w md:block">
+          宽度
+          <input class="mx-4 ipt-img-w" type="text" v-model="imageWidthStore.imageWidth" />
+          px
+        </div>
       </div>
     </div>
-    <div class="mt-5 w-full">
+    <div class="w-full mt-5">
       <ImageTask v-if="images.length > 0" :images="images"></ImageTask>
-      <div v-else class="text-center w-full">
-        <div class="flex font-bold text-white p-8 text-5xl justify-center items-center">样片</div>
-        <div class="grid gap-8 grid-cols-[repeat(auto-fit,minmax(500px,1fr))]">
+      <div v-else class="w-full text-center">
+        <div class="flex items-center justify-center p-8 text-5xl font-bold text-white">样片</div>
+        <div class="grid gap-8 grid-cols-[repeat(auto-fit,minmax(280px,1fr))]">
           <img v-for="(item, idx) in sampleImages" :key="idx" class="img" :src="item" alt="" />
         </div>
       </div>
@@ -43,16 +41,16 @@ import { ref } from 'vue'
 
 import ImageTask from '@/components/ImageTask.vue'
 
-import sampleImage1 from '@/libs/assets/sample1.png'
-import sampleImage2 from '@/libs/assets/sample2.png'
-import sampleImage3 from '@/libs/assets/sample3.png'
-import sampleImage4 from '@/libs/assets/sample4.png'
-import sampleImage5 from '@/libs/assets/sample5.png'
-import { useBgColorFlagStore } from '@/stores/bgColorFlag'
+import { useImageWidthStore } from '@/stores/ImageWidth'
 
-const bgColorFlagStore = useBgColorFlagStore()
+const imageWidthStore: any = useImageWidthStore()
 
-const sampleImages = [sampleImage1, sampleImage2, sampleImage3, sampleImage4, sampleImage5]
+const sampleImages = [
+  './samples/sample1.jpeg',
+  './samples/sample2.jpeg',
+  './samples/sample3.jpeg',
+  './samples/sample4.jpeg'
+]
 
 let fileLoading = ref(false)
 let images: any = ref([])
@@ -79,6 +77,10 @@ async function filechange(e: any) {
 </script>
 
 <style scoped lang="scss">
+.v-home-view {
+  max-width: 1440px;
+  margin: 0 auto;
+}
 .head {
   border-radius: 20px;
   background-color: rgba(0, 0, 0, 0.4);
@@ -86,11 +88,10 @@ async function filechange(e: any) {
 .btn-choose {
   position: relative;
   color: #fff;
-  font-size: 20px;
   font-weight: bolder;
-  padding: 8px 48px;
+
   text-align: center;
-  line-height: 54px;
+  line-height: 20px;
   border: 1px solid #fff;
   border-radius: 20px;
   overflow: hidden;
@@ -168,5 +169,18 @@ async function filechange(e: any) {
 .sample-img {
   width: 1300px;
   display: block;
+}
+
+.img-w {
+  font-size: 16px;
+  font-weight: 800;
+  text-align: center;
+}
+.ipt-img-w {
+  padding: 12px 0;
+  width: 80px;
+  border-radius: 20px;
+  color: #222;
+  text-align: center;
 }
 </style>
